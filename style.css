@@ -1,0 +1,97 @@
+
+
+.body {
+  float: left;
+  width:30%;
+  margin:1%;
+  border-right: 1px solid #000000;
+  min-height: 500px;
+
+}
+
+
+.input_text {
+}
+
+
+.full_box {
+        padding: 50px;
+        font-size: 32px;
+        font-weight: bold;
+        text-align: left;
+        background: #dbdfe5;
+		border-radius:5px;
+    }
+
+	.main-content
+	{
+		min-height:330px;
+		background:#dbdfe5;
+	}
+
+
+	.feature_images {
+	width:70%;
+	height:70%;
+	border-radius:35px;
+	max-height:200px;
+	max-width:200px;
+	}
+
+	.register_forms {
+	padding-top:10px;
+	color:#cccccc;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	}
+
+  .white_text {
+	color:white;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	}
+
+  .menu_text {
+    color:white;
+  	font-family: 'Lato', sans-serif;
+  	padding-left: 10px;
+  }
+
+  .general_text {
+    color:black;
+  	font-family: 'Lato', sans-serif;
+  	font-weight: 400;
+
+
+  }
+
+
+.footer_links {
+
+}
+
+
+.footer_links:link {
+    color:blue;
+    font-family: 'Lato', sans-serif;
+  	font-weight: 400;
+    text-decoration: none;
+}
+
+.footer_links:visited {
+    color: blue;
+    font-family: 'Lato', sans-serif;
+  	font-weight: 400;
+}
+
+.footer_links:hover {
+    text-decoration: underline;
+    font-family: 'Lato', sans-serif;
+  	font-weight: 400;
+}
+
+.footer_links:active {
+    color: black;
+    font-family: 'Lato', sans-serif;
+  	font-weight: 400;
+}

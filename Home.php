@@ -18,7 +18,7 @@
 	<!-- The stylesheet where we add our own stylings -->
 	<link rel='stylesheet prefetch' href='http:////netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'>
 
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="css/style.css">
 
 </head>
 <body style="background:#dbdfe5">

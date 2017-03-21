@@ -1,0 +1,14 @@
+# application line only included when running in local dev server
+# application: cloud-computing-161016
+# version: 1
+runtime: php55
+api_version: 1
+
+handlers:
+
+- url: /css
+  static_dir: ./css
+
+- url: /.*
+  script: Home.php
+

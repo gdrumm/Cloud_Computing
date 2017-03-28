@@ -1,5 +1,56 @@
 <?php
 
+include("connection.php");
+
+
+$add_error=""; //variable to store error message;
+$delete_response="";
+
+
+if(isset($_POST['add_submit']))
+{
+	if(empty($_POST['add_item_name']) || empty($_POST['add_item_category']) || empty($_POST['add_item_price']))
+	{
+		$add_error = "All fields are required";
+	}
+  else
+  {
+    $item_name = mysqli_real_escape_string($conn, $_POST['add_item_name']);
+    $item_category = mysqli_real_escape_string($conn, $_POST['add_item_category']);
+    $item_price = mysqli_real_escape_string($conn, $_POST['add_item_price']);
+
+
+    $data_insert = "INSERT INTO SHOP (ITEM_NAME, CATEGORY, PRICE) VALUES ('$item_name', '$item_category', '$item_price')";
+
+    mysqli_query($conn, $data_insert);
+        echo "<script language='javascript'>
+          alert('Your entry has been added succesfully');
+
+          </script>";
+
+  }
+}
+
+if(isset($_POST['delete_submit']))
+{
+	if(empty($_POST['delete_item_name']))
+	{
+		$delete_response = "Must enter an item name.";
+	}
+  else
+  {
+    $item_name = mysqli_real_escape_string($conn, $_POST['delete_item_name']);
+
+
+    $data_delete = "DELETE FROM SHOP WHERE ITEM_NAME = '$item_name';";
+
+    $delete_response = $item_name . " has been succesfully deleted.";
+
+    mysqli_query($conn, $data_delete);
+
+  }
+}
+
 ?>
 
 
@@ -21,21 +72,23 @@
 	<link rel="stylesheet" href="css/style.css">
 
 </head>
-<body style="background:#dbdfe5">
+<body style="background:#ffffff;margin-bottom:100px;">
 
+<div style="margin-top:0px;" class="header">
   <h1 style="text-align:center" class="general_text">Cloud Computing Assigment</h1>
-          <p style="text-align:center"><a class="footer_links" href="#">Home</a></p>
+  <p style="text-align:center"><a class="footer_links" href="">Home</a></p>
+</div>
 
 <div style="padding-top:20px;">
-  <div style="border-right: 1px solid #000000;" class="body">
+  <div style="" class="bodypart">
+    <form id="form_design" method="POST" action="results">
       		<h2 class="general_text">Search Our Inventory</h2>
-          <a class="footer_links" href="#">View all our inventory</a>
+          <a class="footer_links" href="all_data">View all our inventory</a>
 
-        <form method="POST" action="">
-          <h3 class="general_text">Search By Item</h3>
+          <h4 class="general_text">Search By Item</h3>
           <input class="input_text" type="text" placeholder="Name..." name="search_item_name">
 
-        	<h3 class="general_text">Search By Category</h3>
+        	<h4 class="general_text">Search By Category</h3>
           <select name="search_item_category">
             <option value="Sport">Sport</option>
             <option value="Food">Food</option>
@@ -43,56 +96,54 @@
           </select>
 
 
-          <h3 class="general_text">Search By Price</h3>
-          <p class="general_text">Less than: <input class="input_text" type="text" placeholder="Price..." name="search_less_price"></p>
-          <p class="general_text">Or greater than: <input class="input_text" type="text" placeholder="Price..." name="search_greater_price"></p>
+          <h4 class="general_text">Search By Price</h3>
+          <p class="general_text">Less than: <br><br><input class="input_text" type="text" placeholder="Price..." name="search_less_price"></p>
+          <p class="general_text">Or greater than: <br><br><input class="input_text" type="text" placeholder="Price..." name="search_greater_price"></p>
           <p class="general_text">Input a value into each box to search for all items in between the two prices.</p>
 
           <input type="submit" value="Submit" name="search_submit">
 
         </form>
   </div>
-  <div style="border-right: 1px solid #000000;min-height: 500px;" class="body">
-      <div class="">
-      	<div class="">
-      		<h2 class="general_text">Add to Our Inventory</h2>
-      	</div>
+  <div style="" class="bodypart">
+        <form id="form_design" method="POST" action="">
         <p style="" class="lead">
-        <form method="POST" action="">
+          <h2 style="text-align:center;" class="general_text">Add to Our Inventory</h2>
+          <h4 class="general_text">Item name *</h4>
+          <input style="" class="input_text" type="text" placeholder="Name..." name="add_item_name">
 
-          <h4 class="general_text">Item name</h4>
-          <input class="input_text" type="text" placeholder="Name..." name="add_item_name">
-
-          <h4 class="general_text">Item Category</h4>
+          <h4 class="general_text">Item Category *</h4>
           <select name="add_item_category">
             <option value="Sport">Sport</option>
             <option value="Food">Food</option>
             <option value="Drink">Drink</option>
           </select>
 
-          <h4 class="general_text">Item price</h4>
+          <h4 class="general_text">Item price *</h4>
           <input type="text" placeholder="Price..." name="add_item_price">
           <br><br>
           <input type="submit" value="Submit" name="add_submit">
+          <br><br>
+          <?php echo $add_error; ?>
 
         </form>
 
 
         </p>
-      </div>
+
   </div>
-  <div style="" class="body">
-      	<div class="">
-      		<h2 class="general_text">Remove from Our Inventory</h2>
-      	</div>
-          <p class="general_text">To remove something from our database you must do so by entering the item's name.</p>
-          <h4 class="general_text">Item name</h4>
-          <form method="POST" action="">
-            <input class="input_text" type="text" placeholder="Name..." name="delete_item_name">
-            <br><br>
-            <input type="submit" value="Submit" name="delete_submit">
+  <div style="" class="bodypart">
+      	  <form method="POST" action="" id="form_design">
+        		<h2 class="general_text">Remove from Our Inventory</h2>
+
+            <p class="general_text">To remove something from our database you must do so by entering the item's name.</p>
+            <h4 class="general_text">Item name *</h4>
+              <input class="input_text" type="text" placeholder="Name..." name="delete_item_name">
+              <br><br>
+              <input type="submit" value="Submit" name="delete_submit">
+            <br><br><h3 class="general_text"><?php echo $delete_response; ?></h3>
+            <p class="general_text">If you aren't sure of the item's name, please search for it first using our search facility.</p>
           </form>
-          <p class="general_text">If you aren't sure of the item's name, please search for it first using our search facility.</p>
   </div>
 </div>
 

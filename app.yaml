@@ -7,8 +7,24 @@ api_version: 1
 handlers:
 
 - url: /css
-  static_dir: ./css
+  static_dir: css
 
-- url: /.*
+- url: /
   script: Home.php
 
+- url: /results
+  script: search_results.php
+
+- url: /all_data
+  script: full_results.php
+
+- url: /.*
+  script: connection.php
+
+# Database connection
+env_variables:
+# Replace project, instance, database, user and password with the values obtained
+# when configuring your Cloud SQL instance.
+  MYSQL_DSN: mysql:unix_socket=/cloudsql/cloud-computing-161016:europe-west1:cloud-computing;dbname=Cloud_Computing
+  MYSQL_USER: root
+  MYSQL_PASSWORD: 'ray_walshe'

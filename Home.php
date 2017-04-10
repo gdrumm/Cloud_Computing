@@ -35,7 +35,7 @@ if(isset($_POST['delete_submit']))
 {
 	if(empty($_POST['delete_item_name']))
 	{
-		$delete_response = "Must enter an item name.";
+		$delete_response = "<h3 style='color:red' class='general_text'> " . "Must enter an item name." . "</h3>";
 	}
   else
   {
@@ -44,7 +44,7 @@ if(isset($_POST['delete_submit']))
 
     $data_delete = "DELETE FROM SHOP WHERE ITEM_NAME = '$item_name';";
 
-    $delete_response = $item_name . " has been succesfully deleted.";
+    $delete_response = "<h3 class='general_text'> " . $item_name . " has been succesfully deleted. </h3><p class='general_text'><a class='footer_links' href='all_data'>View the updated inventory</a><p>";
 
     mysqli_query($conn, $data_delete);
 
@@ -90,6 +90,7 @@ if(isset($_POST['delete_submit']))
 
         	<h4 class="general_text">Search By Category</h3>
           <select name="search_item_category">
+						<option value='' disabled selected>Category</option>
             <option value="Sport">Sport</option>
             <option value="Food">Food</option>
             <option value="Drink">Drink</option>
@@ -97,8 +98,8 @@ if(isset($_POST['delete_submit']))
 
 
           <h4 class="general_text">Search By Price</h3>
-          <p class="general_text">Less than: <br><br><input class="input_text" type="text" placeholder="Price..." name="search_less_price"></p>
-          <p class="general_text">Or greater than: <br><br><input class="input_text" type="text" placeholder="Price..." name="search_greater_price"></p>
+						<p class="general_text">Greater than: <br><br><input class="input_text" type="text" placeholder="Price..." name="search_greater_price"></p>
+          <p class="general_text">Or less than: <br><br><input class="input_text" type="text" placeholder="Price..." name="search_less_price"></p>
           <p class="general_text">Input a value into each box to search for all items in between the two prices.</p>
 
           <input type="submit" value="Submit" name="search_submit">
@@ -114,6 +115,7 @@ if(isset($_POST['delete_submit']))
 
           <h4 class="general_text">Item Category *</h4>
           <select name="add_item_category">
+						<option value='' disabled selected>Category</option>
             <option value="Sport">Sport</option>
             <option value="Food">Food</option>
             <option value="Drink">Drink</option>
@@ -122,9 +124,10 @@ if(isset($_POST['delete_submit']))
           <h4 class="general_text">Item price *</h4>
           <input type="text" placeholder="Price..." name="add_item_price">
           <br><br>
+          <h3 style="color:red" class="general_text"><?php echo $add_error; ?></h3>
+					<br><br>
           <input type="submit" value="Submit" name="add_submit">
           <br><br>
-          <?php echo $add_error; ?>
 
         </form>
 
@@ -140,8 +143,8 @@ if(isset($_POST['delete_submit']))
             <h4 class="general_text">Item name *</h4>
               <input class="input_text" type="text" placeholder="Name..." name="delete_item_name">
               <br><br>
-              <input type="submit" value="Submit" name="delete_submit">
-            <br><br><h3 class="general_text"><?php echo $delete_response; ?></h3>
+              <input type="submit" value="Submit" name="delete_submit" onclick="return confirm('Are you sure you want to delete this item?')">
+            <br><br><?php echo $delete_response; ?>
             <p class="general_text">If you aren't sure of the item's name, please search for it first using our search facility.</p>
           </form>
   </div>

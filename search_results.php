@@ -3,6 +3,7 @@ include("connection.php");
 
 $output = "";
 
+$submit = $_POST['search_submit'];
 $itemName = $_POST['search_item_name'];
 $itemCategory = $_POST['search_item_category'];
 $itemLowPrice = $_POST['search_less_price'];
@@ -49,63 +50,43 @@ function queryLoop($conn, $query)
 
   <?php
 
-if(!empty($itemName))
-{
+
+switch ($submit) {
+
+  case (!empty($itemName)):
   $query = "SELECT * FROM SHOP WHERE ITEM_NAME = '$itemName'";
   queryLoop($conn, $query);
+  break;
 
-
-}
-elseif( (!empty($itemCategory)) && (empty($itemLowPrice)) && (empty($itemHighPrice)) )
-{
+  case ( (!empty($itemCategory)) && (empty($itemLowPrice)) && (empty($itemHighPrice)) ):
   $query = "SELECT * FROM SHOP WHERE CATEGORY = '$itemCategory'";
-  queryLoop($conn, $query);}
+  queryLoop($conn, $query);
+  break;
 
-elseif( (empty($itemCategory)) && (!empty($itemLowPrice)) && (empty($itemHighPrice)) )
-{
+  case ( (empty($itemCategory)) && (!empty($itemLowPrice)) && (empty($itemHighPrice)) ):
+  //Lower price
   $query = "SELECT * FROM SHOP WHERE PRICE < '$itemLowPrice'";
   queryLoop($conn, $query);
+  break;
 
-}
-
-elseif( (empty($itemCategory)) && (empty($itemLowPrice)) && (!empty($itemHighPrice)) )
-{
+  case ( (empty($itemCategory)) && (empty($itemLowPrice)) && (!empty($itemHighPrice)) ):
   //Higher price
   $query = "SELECT * FROM SHOP WHERE PRICE > '$itemHighPrice'";
   queryLoop($conn, $query);
+  break;
 
-}
-
-elseif( (empty($itemCategory)) && (!empty($itemLowPrice)) && (!empty($itemHighPrice)) )
-{
-    //price inbetween
-    $query = "SELECT * FROM SHOP WHERE PRICE > '$itemLowPrice'  AND PRICE < '$itemHighPrice'";
-    queryLoop($conn, $query);
-}
-
-elseif( (!empty($itemCategory)) && (!empty($itemLowPrice)) && (empty($itemHighPrice)) )
-{
-  $query = "SELECT * FROM SHOP WHERE CATEGORY = '$itemCategory' AND Price < '$itemLowPrice'";
+  case ( (empty($itemCategory)) && (!empty($itemLowPrice)) && (!empty($itemHighPrice)) ):
+  //price inbetween
+  $query = "SELECT * FROM SHOP WHERE PRICE > '$itemLowPrice'  AND PRICE < '$itemHighPrice'";
   queryLoop($conn, $query);
+  break;
+
+  default:
+    $output = "Sorry but no results match your search. Please try again.";
+    break;
 }
 
-elseif( (!empty($itemCategory)) && (empty($itemLowPrice)) && (!empty($itemHighPrice)) )
-{
-  //Category with high price
-  $query = "SELECT * FROM SHOP WHERE CATEGORY = '$itemCategory' AND Price < '$itemHighPrice'";
-  queryLoop($conn, $query);
-}
 
-elseif( (!empty($itemCategory)) && (!empty($itemLowPrice)) && (!empty($itemHighPrice)) )
-{
-  //Category with price inbetween
-  $query = "select * from SHOP WHERE CATEGORY = '$itemCategory' AND Price < '$itemLowPrice' AND PRICE > '$itemHighPrice'";
-  queryLoop($conn, $query);
-}
-
-else {
-  $output = "Sorry but no results match your search. Please try again.";
-}
 ?>
 
    <h3 style="text-align:center" class="general_text"><?php echo $output; ?></h3>

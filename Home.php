@@ -75,7 +75,7 @@ if(isset($_POST['delete_submit']))
 <body style="background:#ffffff;margin-bottom:100px;">
 
 <div style="margin-top:0px;" class="header">
-  <h1 style="text-align:center" class="general_text">Cloud Computing Assigment</h1>
+  <h1 style="text-align:center" class="general_text">Our Cloud Computing Assigment</h1>
   <p style="text-align:center"><a class="footer_links" href="">Home</a></p>
 </div>
 
